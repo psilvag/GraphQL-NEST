@@ -1,0 +1,16 @@
+
+
+Instalacion de graphQL
+
+1. yarn add @nestjs/graphql @nestjs/apollo graphql apollo-server-express
+2. yarn add @apollo/server
+3. Configuramos el Module
+    imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver:ApolloDriver,
+      autoSchemaFile:join(process.cwd(), 'src/schema.gql'),
+    }),
+    
+  ],
+4. usamos resolvers
+5. para hacer querys abrimos en nuestro navegador localhost:3000/graphql
