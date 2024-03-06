@@ -5,6 +5,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServer } from "@apollo/server";
 import { HelloWorldModule } from './hello-world/hello-world.module';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { TodoModule } from './todo/todo.module';
 
 
 
@@ -20,7 +21,8 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
         ApolloServerPluginLandingPageLocalDefault()
       ]
     }),
-    HelloWorldModule
+    HelloWorldModule,
+    TodoModule
   ],
   controllers: [],
   providers: [],
