@@ -1,7 +1,8 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateTodoInput } from './DTO/inputs/createTodo.input';
+import { CreateTodoInput,UpdateTodoInput } from './DTO/inputs';
 import { Todo } from './entity/todo.entity';
 import { TodoService } from './todo.service';
+import { StatusArgs } from './DTO/args/status.args';
 
 @Resolver()
 export class TodoResolver {
@@ -11,13 +12,13 @@ constructor(
 ){}
 
 @Query(()=>[Todo],{name:'ToDos'})//[Todo] array de "Todos" propio de GraphQL
-findAll():Todo[]{
-  return  this.todoService.findAll()
+findAll(@Args() statusArgs:StatusArgs):Todo[]{
+  return  this.todoService.findAll(statusArgs)
 }
 
 @Query(()=>Todo,{name:'ToDoID'})
-findOne(@Args('id',{type:()=>Int})id:number):Todo{
-   return this.todoService.findOne(id)
+findOne(@Args('id',{type:()=>Int}) id:number):Todo{
+  return this.todoService.findOne(id)
 }
 
 //@Mutation son querys usados para modificar la data almacenada
@@ -29,9 +30,10 @@ createTodo(@Args('createTodo') createTodoInput:CreateTodoInput){
 
 }
 
-
-
-updateTodo(){
+@Mutation(()=>Todo,{name:'updateTodo'})
+updateTodo(@Args('updateTodoInput') updateTodoInput:UpdateTodoInput){
+    
+  return this.todoService.updateTodo(updateTodoInput)
 
 }
 deleteTodo(){
