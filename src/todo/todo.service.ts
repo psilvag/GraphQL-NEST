@@ -12,6 +12,19 @@ export class TodoService {
     {id:3, description:'todo3',done:false}
    ] 
 
+   // -------getters---------
+   get totalTodos(){
+    return this.todos.length
+   }
+   get completedTodos(){
+    return this.todos.filter(todo=>todo.done===true).length
+   
+   }
+   get pendingTodos(){
+   return this.todos.filter(todo=>todo.done===false).length
+    
+   }
+
    findAll(statusArgs:StatusArgs):Todo[]{
     if(statusArgs.status!==undefined){
     return this.todos.filter(todo=>todo.done===statusArgs.status)
@@ -43,6 +56,12 @@ export class TodoService {
     })
 
     return todoToUpdate
+   }
+
+   delete(id:number){
+    const todo= this.findOne(id)
+    this.todos=this.todos.filter(todo=>todo.id!==id)
+    return true
    }
 
 }

@@ -3,8 +3,9 @@ import { CreateTodoInput,UpdateTodoInput } from './DTO/inputs';
 import { Todo } from './entity/todo.entity';
 import { TodoService } from './todo.service';
 import { StatusArgs } from './DTO/args/status.args';
+import { AgregationsType } from './types/agregations.type';
 
-@Resolver()
+@Resolver(()=>Todo) // Le decimos que este resolver trabaja con tipo de datos "Todos"
 export class TodoResolver {
 
 constructor(
@@ -36,8 +37,38 @@ updateTodo(@Args('updateTodoInput') updateTodoInput:UpdateTodoInput){
   return this.todoService.updateTodo(updateTodoInput)
 
 }
-deleteTodo(){
-
+@Mutation(()=>Boolean,{name:"deleteTodo"})
+deleteTodo(@Args('id',{type:()=>Int}) id:number){
+   return this.todoService.delete(id)
 }
+
+// Agregations, para obtener la cantidad de todos
+@Query(()=>Int,{name:'totalTodos'})
+total():number{
+ return this.todoService.totalTodos
+}
+
+@Query(()=>Int,{name:'completedTodos'})
+completed():number{
+ return this.todoService.completedTodos
+}
+
+@Query(()=>Int,{name:'pendingTodos'})
+pending():number{
+ return this.todoService.pendingTodos
+}
+
+//2da forma usando ObjectTypes, obtener la cantidad de todos
+@Query(()=>AgregationsType)
+agregation():AgregationsType{
+   return{
+    total:this.todoService.totalTodos,
+    completed:this.todoService.completedTodos,
+    pending:this.todoService.pendingTodos,
+    totalCompleted:this.todoService.completedTodos
+  
+   }
+}
+
 
 }

@@ -16,7 +16,7 @@ import { TodoModule } from './todo/todo.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver:ApolloDriver,
       autoSchemaFile:join(process.cwd(), 'src/schema.gql'),//archivo que contiene la informacion del esquema de graphQl 
-      playground:false, //Esto indica que se habilitara o no la pagina donde se hacen los querys, en caso de que no esta habilitado la pagina debera porcionarse por codigo la consulta.
+      playground:false, //Esto indica  SI se habilitara o no la pagina donde se hacen los querys, en caso de que no esta habilitado la pagina debera proporcionarse por codigo la consulta.
       plugins:[
         ApolloServerPluginLandingPageLocalDefault()
       ]
